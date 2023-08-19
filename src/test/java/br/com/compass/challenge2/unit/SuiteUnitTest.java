@@ -10,9 +10,9 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @Testable
 @SelectClasses({
-        SuiteService.class,
-        SuiteEntity.class,
-        GlobalExceptionHandlerTest.class
+                SuiteService.class,
+                SuiteEntity.class,
+                GlobalExceptionHandlerTest.class
 })
 public class SuiteUnitTest {
 }

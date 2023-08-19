@@ -1,4 +1,5 @@
 package br.com.compass.challenge2.unit.entity;
+
 import br.com.compass.challenge2.entity.Assessment;
 import br.com.compass.challenge2.entity.Student;
 import jakarta.validation.ConstraintViolation;
@@ -81,7 +82,5 @@ public class AssessmentTest {
         assertEquals(1, violations.size());
         assertEquals("activityName", violations.iterator().next().getPropertyPath().toString());
     }
-
-
 
 }

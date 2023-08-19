@@ -41,8 +41,8 @@ public class StudentControllerTest implements ConfigTest {
         student.setEmail("gabriel@guilherme.com");
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/students")
-                        .content(objectMapper.writeValueAsString(student))
-                        .contentType(MediaType.APPLICATION_JSON))
+                .content(objectMapper.writeValueAsString(student))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Gabriel"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("gabriel@guilherme.com"));
@@ -54,8 +54,8 @@ public class StudentControllerTest implements ConfigTest {
         student.setId(1L);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/students")
-                        .content(objectMapper.writeValueAsString(student))
-                        .contentType(MediaType.APPLICATION_JSON))
+                .content(objectMapper.writeValueAsString(student))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
@@ -107,8 +107,8 @@ public class StudentControllerTest implements ConfigTest {
         student.setEmail("gabriel@email.com");
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/students/1")
-                        .content(objectMapper.writeValueAsString(student))
-                        .contentType(MediaType.APPLICATION_JSON))
+                .content(objectMapper.writeValueAsString(student))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Gabriel"))
@@ -123,8 +123,8 @@ public class StudentControllerTest implements ConfigTest {
         student.setEmail("gabriel@guilherme.com");
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/students/1")
-                        .content(objectMapper.writeValueAsString(student))
-                        .contentType(MediaType.APPLICATION_JSON))
+                .content(objectMapper.writeValueAsString(student))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 

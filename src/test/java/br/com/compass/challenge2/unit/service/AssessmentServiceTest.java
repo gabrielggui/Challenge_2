@@ -1,4 +1,5 @@
 package br.com.compass.challenge2.unit.service;
+
 import br.com.compass.challenge2.config.ConfigTest;
 import br.com.compass.challenge2.entity.Assessment;
 import br.com.compass.challenge2.entity.Student;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
-
 
 public class AssessmentServiceTest implements ConfigTest {
 

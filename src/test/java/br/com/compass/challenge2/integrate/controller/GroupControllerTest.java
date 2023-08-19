@@ -14,14 +14,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
-
 import java.util.ArrayList;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @AutoConfigureMockMvc(addFilters = false)
-public class GroupControllerTest implements ConfigTest{
+public class GroupControllerTest implements ConfigTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,7 +37,7 @@ public class GroupControllerTest implements ConfigTest{
     private Group group;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         group = Group.builder()
                 .id(1L)
                 .name("Spring Boot")
@@ -55,8 +54,8 @@ public class GroupControllerTest implements ConfigTest{
     @Test
     void createSampleGroup() throws Exception {
         mockMvc.perform(post("/api/groups")
-                        .content(objectMapper.writeValueAsString(group))
-                        .contentType(MediaType.APPLICATION_JSON))
+                .content(objectMapper.writeValueAsString(group))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("Spring Boot"));
     }
@@ -99,8 +98,8 @@ public class GroupControllerTest implements ConfigTest{
         group.setName("AWS");
 
         mockMvc.perform(put("/api/groups/1")
-                        .content(objectMapper.writeValueAsString(group))
-                        .contentType(MediaType.APPLICATION_JSON))
+                .content(objectMapper.writeValueAsString(group))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("AWS"));
@@ -110,8 +109,8 @@ public class GroupControllerTest implements ConfigTest{
     void updateNonExistingGroup() throws Exception {
 
         mockMvc.perform(put("/api/groups/1")
-                        .content(objectMapper.writeValueAsString(group))
-                        .contentType(MediaType.APPLICATION_JSON))
+                .content(objectMapper.writeValueAsString(group))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 

@@ -18,7 +18,6 @@ import br.com.compass.challenge2.repository.StudentRepository;
 import br.com.compass.challenge2.service.StudentService;
 import jakarta.persistence.EntityNotFoundException;
 
-
 public class StudentServiceTest implements ConfigTest {
 
     @MockBean

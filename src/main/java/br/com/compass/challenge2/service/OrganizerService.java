@@ -1,7 +1,6 @@
 package br.com.compass.challenge2.service;
 
 import br.com.compass.challenge2.entity.Organizer;
-import br.com.compass.challenge2.entity.Role;
 import br.com.compass.challenge2.repository.OrganizerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,8 @@ public class OrganizerService implements CrudService<Organizer> {
 
     @Override
     public Organizer findById(Long id) {
-        return organizerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Organizer not found with id: " + id));
+        return organizerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Organizer not found with id: " + id));
     }
 
     @Override
@@ -46,17 +46,16 @@ public class OrganizerService implements CrudService<Organizer> {
         return organizerRepository.save(existingOrganizer);
     }
 
-    
-	@Override
-	public Organizer deleteById(Long id) {
-		Organizer organizer;
-		try {
-			organizer = organizerRepository.findById(id).get();
-			organizerRepository.deleteById(id);
-		} catch (NoSuchElementException e) {
-			throw new EntityNotFoundException("Organizer does not exist with id: " + id);
-		}
+    @Override
+    public Organizer deleteById(Long id) {
+        Organizer organizer;
+        try {
+            organizer = organizerRepository.findById(id).get();
+            organizerRepository.deleteById(id);
+        } catch (NoSuchElementException e) {
+            throw new EntityNotFoundException("Organizer does not exist with id: " + id);
+        }
 
-		return organizer;
-	}
+        return organizer;
+    }
 }

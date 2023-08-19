@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 public class StudentTest {
 
     private Student student;
@@ -20,7 +21,6 @@ public class StudentTest {
     private List<Assessment> assessments;
     private Assessment assessment1;
     private Assessment assessment2;
-
 
     @BeforeEach
     void setUp() {
@@ -53,7 +53,7 @@ public class StudentTest {
         assessment2.setStudent(student);
         assessment2.setGrade(7.5F);
 
-        student.setAssessments(Arrays.asList(assessment1,assessment2));
+        student.setAssessments(Arrays.asList(assessment1, assessment2));
 
         assessments = new ArrayList<>();
         assessments.add(assessment1);

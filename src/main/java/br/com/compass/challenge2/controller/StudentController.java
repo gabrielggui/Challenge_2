@@ -53,7 +53,9 @@ public class StudentController {
                 linkTo(methodOn(StudentController.class).updateStudent(student.getId(), student))
                         .withRel("update"),
                 linkTo(methodOn(StudentController.class).deleteStudent(student.getId())).withRel("delete"),
-                linkTo(methodOn(AssessmentController.class).getAssessmentsByStudentId(student.getId())).withRel("assessments"))).toList();
+                linkTo(methodOn(AssessmentController.class).getAssessmentsByStudentId(student.getId()))
+                        .withRel("assessments")))
+                .toList();
 
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
@@ -64,7 +66,8 @@ public class StudentController {
         student.add(linkTo(methodOn(StudentController.class).findStudentById(id)).withSelfRel(),
                 linkTo(methodOn(StudentController.class).updateStudent(id, student)).withRel("update"),
                 linkTo(methodOn(StudentController.class).deleteStudent(id)).withRel("delete"),
-                linkTo(methodOn(AssessmentController.class).getAssessmentsByStudentId(student.getId())).withRel("assessments"),
+                linkTo(methodOn(AssessmentController.class).getAssessmentsByStudentId(student.getId()))
+                        .withRel("assessments"),
                 linkTo(methodOn(StudentController.class).findAllStudents()).withRel("all_students"));
 
         return new ResponseEntity<>(student, HttpStatus.OK);
@@ -72,7 +75,7 @@ public class StudentController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Student> updateStudent(@Valid @PathVariable Long id,
-                                                 @RequestBody Student student) {
+            @RequestBody Student student) {
         student.setId(id);
         Student updatedStudent = studentService.update(student);
         updatedStudent.add(linkTo(methodOn(StudentController.class).findStudentById(id)).withSelfRel(),

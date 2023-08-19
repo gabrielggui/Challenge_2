@@ -49,29 +49,32 @@ public class OrganizerControllerTest implements ConfigTest {
         newOrganizer.setEmail("jane.smith@example.com");
 
         mockMvc.perform(post("/organizers")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(newOrganizer)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(newOrganizer)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("Jane Smith"))
                 .andExpect(jsonPath("$.email").value("jane.smith@example.com"));
     }
+
     @Test
     public void testCreateOrganizerInvalidData() throws Exception {
-        Organizer invalidOrganizer = new Organizer(); // Não definir dados obrigatórios, o que deve resultar em uma resposta de erro
+        Organizer invalidOrganizer = new Organizer(); // Não definir dados obrigatórios, o que deve resultar em uma
+                                                      // resposta de erro
 
         mockMvc.perform(post("/organizers")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(invalidOrganizer)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(invalidOrganizer)))
                 .andExpect(status().isBadRequest());
     }
+
     @Test
     public void testUpdateOrganizer() throws Exception {
         testOrganizer.setName("Updated Name");
         testOrganizer.setEmail("updated.email@example.com");
 
         mockMvc.perform(put("/organizers/{id}", testOrganizer.getId())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(testOrganizer)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(testOrganizer)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Updated Name"))
                 .andExpect(jsonPath("$.email").value("updated.email@example.com"));
@@ -102,6 +105,7 @@ public class OrganizerControllerTest implements ConfigTest {
         mockMvc.perform(delete("/organizers/{id}", 999L))
                 .andExpect(status().isNotFound());
     }
+
     @Test
     public void testAssociateOrganizerWithRole() throws Exception {
         List<Role> roles = new ArrayList<>();
@@ -109,8 +113,8 @@ public class OrganizerControllerTest implements ConfigTest {
         testOrganizer.setRoles(roles);
 
         mockMvc.perform(put("/organizers/{id}", testOrganizer.getId())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(testOrganizer)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(testOrganizer)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.roles").isArray())
                 .andExpect(jsonPath("$.roles[0]").value("COORDINATOR"));
@@ -141,6 +145,5 @@ public class OrganizerControllerTest implements ConfigTest {
                 .andExpect(jsonPath("$._embedded.organizers[1].name").value("Jane Smith"))
                 .andDo(MockMvcResultHandlers.print());
     }
-
 
 }

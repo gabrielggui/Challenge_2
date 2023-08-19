@@ -1,10 +1,12 @@
 package br.com.compass.challenge2.unit.handler;
+
 import br.com.compass.challenge2.handler.GlobalExceptionHandler;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ProblemDetail;
+
 public class GlobalExceptionHandlerTest {
 
     @Test

@@ -32,7 +32,8 @@ public class GroupController {
         groups.stream().map(group -> group.add(
                 linkTo(methodOn(GroupController.class).findGroupById(group.getId())).withSelfRel(),
                 linkTo(methodOn(GroupController.class).updateGroup(group.getId(), group))
-                        .withRel("update"))).toList();
+                        .withRel("update")))
+                .toList();
 
         return new ResponseEntity<>(groups, HttpStatus.OK);
     }
@@ -78,8 +79,6 @@ public class GroupController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Group> deleteGroupById(@PathVariable Long id) {
-        Group group = groupService.findById(id);
-
         Group deletedGroup = groupService.deleteById(id);
         deletedGroup.add(linkTo(methodOn(GroupController.class).findAllGroups()).withRel("all_groups"));
         return new ResponseEntity<>(deletedGroup, HttpStatus.OK);

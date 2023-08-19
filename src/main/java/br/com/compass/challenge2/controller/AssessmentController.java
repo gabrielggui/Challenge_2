@@ -1,4 +1,5 @@
 package br.com.compass.challenge2.controller;
+
 import br.com.compass.challenge2.dto.AssessmentDTO;
 import br.com.compass.challenge2.entity.Assessment;
 import br.com.compass.challenge2.entity.Student;
@@ -28,6 +29,7 @@ public class AssessmentController {
         this.assessmentService = assessmentService;
         this.studentService = studentService;
     }
+
     @PostMapping
     public ResponseEntity<EntityModel<Assessment>> createAssessment(@Valid @RequestBody AssessmentDTO assessmentDto) {
         Student student = studentService.findById(assessmentDto.getStudentId());
@@ -36,19 +38,25 @@ public class AssessmentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Assessment createdAssessment = new Assessment(null, student, assessmentDto.getActivityName(), assessmentDto.getGrade());
+        Assessment createdAssessment = new Assessment(null, student, assessmentDto.getActivityName(),
+                assessmentDto.getGrade());
         createdAssessment = assessmentService.save(createdAssessment);
 
         // Adicione links HATEOAS
-        Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAssessmentById(createdAssessment.getId())).withSelfRel();
-        Link allAssessmentsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAllAssessments()).withRel("allAssessments");
+        Link selfLink = WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(AssessmentController.class).getAssessmentById(createdAssessment.getId()))
+                .withSelfRel();
+        Link allAssessmentsLink = WebMvcLinkBuilder
+                .linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAllAssessments())
+                .withRel("allAssessments");
         EntityModel<Assessment> assessmentModel = EntityModel.of(createdAssessment, selfLink, allAssessmentsLink);
 
         return new ResponseEntity<>(assessmentModel, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EntityModel<Assessment>> updateAssessment(@PathVariable Long id, @RequestBody AssessmentDTO assessmentDTO) {
+    public ResponseEntity<EntityModel<Assessment>> updateAssessment(@PathVariable Long id,
+            @RequestBody AssessmentDTO assessmentDTO) {
         Assessment existingAssessment = assessmentService.findById(id);
         Student student = studentService.findById(assessmentDTO.getStudentId());
         if (existingAssessment != null) {
@@ -57,18 +65,17 @@ public class AssessmentController {
                 existingAssessment.setStudent(student);
             }
 
-            if (student == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-
             existingAssessment.setActivityName(assessmentDTO.getActivityName());
             existingAssessment.setGrade(assessmentDTO.getGrade());
 
             existingAssessment = assessmentService.update(existingAssessment);
 
             // Adicione links HATEOAS
-            Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAssessmentById(existingAssessment.getId())).withSelfRel();
-            Link allAssessmentsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAllAssessments()).withRel("allAssessments");
+            Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class)
+                    .getAssessmentById(existingAssessment.getId())).withSelfRel();
+            Link allAssessmentsLink = WebMvcLinkBuilder
+                    .linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAllAssessments())
+                    .withRel("allAssessments");
             EntityModel<Assessment> assessmentModel = EntityModel.of(existingAssessment, selfLink, allAssessmentsLink);
 
             return new ResponseEntity<>(assessmentModel, HttpStatus.OK);
@@ -78,7 +85,8 @@ public class AssessmentController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<EntityModel<Assessment>> updatePartialAssessment(@PathVariable Long id, @RequestBody AssessmentDTO assessmentDTO) {
+    public ResponseEntity<EntityModel<Assessment>> updatePartialAssessment(@PathVariable Long id,
+            @RequestBody AssessmentDTO assessmentDTO) {
         Assessment existingAssessment = assessmentService.findById(id);
 
         if (existingAssessment != null) {
@@ -86,13 +94,13 @@ public class AssessmentController {
             if (assessmentDTO.getActivityName() != null) {
                 existingAssessment.setActivityName(assessmentDTO.getActivityName());
             }
-            if(assessmentDTO.getGrade() != null) {
+            if (assessmentDTO.getGrade() != null) {
                 existingAssessment.setGrade(assessmentDTO.getGrade());
             }
             if (assessmentDTO.getStudentId() != null) {
                 Student student = studentService.findById(assessmentDTO.getStudentId());
 
-                if(student == null){
+                if (student == null) {
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 }
                 existingAssessment.setStudent(student);
@@ -101,8 +109,12 @@ public class AssessmentController {
             Assessment updatedAssessment = assessmentService.update(existingAssessment);
 
             // Adicione links HATEOAS
-            Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAssessmentById(updatedAssessment.getId())).withSelfRel();
-            Link allAssessmentsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAllAssessments()).withRel("allAssessments");
+            Link selfLink = WebMvcLinkBuilder.linkTo(
+                    WebMvcLinkBuilder.methodOn(AssessmentController.class).getAssessmentById(updatedAssessment.getId()))
+                    .withSelfRel();
+            Link allAssessmentsLink = WebMvcLinkBuilder
+                    .linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAllAssessments())
+                    .withRel("allAssessments");
             EntityModel<Assessment> assessmentModel = EntityModel.of(updatedAssessment, selfLink, allAssessmentsLink);
 
             return new ResponseEntity<>(assessmentModel, HttpStatus.OK);
@@ -116,8 +128,11 @@ public class AssessmentController {
         if (assessment != null) {
 
             // Adicione links HATEOAS
-            Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAssessmentById(id)).withSelfRel();
-            Link allAssessmentsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAllAssessments()).withRel("allAssessments");
+            Link selfLink = WebMvcLinkBuilder
+                    .linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAssessmentById(id)).withSelfRel();
+            Link allAssessmentsLink = WebMvcLinkBuilder
+                    .linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAllAssessments())
+                    .withRel("allAssessments");
             EntityModel<Assessment> assessmentModel = EntityModel.of(assessment, selfLink, allAssessmentsLink);
 
             return new ResponseEntity<>(assessmentModel, HttpStatus.OK);
@@ -143,11 +158,14 @@ public class AssessmentController {
         if (!assessments.isEmpty()) {
             List<EntityModel<Assessment>> assessmentModels = assessments.stream()
                     .map(assessment -> EntityModel.of(assessment,
-                            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAssessmentById(assessment.getId())).withSelfRel()))
+                            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class)
+                                    .getAssessmentById(assessment.getId())).withSelfRel()))
                     .collect(Collectors.toList());
 
-            Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAllAssessments()).withSelfRel();
-            CollectionModel<EntityModel<Assessment>> assessmentCollectionModel = CollectionModel.of(assessmentModels, selfLink);
+            Link selfLink = WebMvcLinkBuilder
+                    .linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAllAssessments()).withSelfRel();
+            CollectionModel<EntityModel<Assessment>> assessmentCollectionModel = CollectionModel.of(assessmentModels,
+                    selfLink);
 
             return new ResponseEntity<>(assessmentCollectionModel, HttpStatus.OK);
         } else {
@@ -162,11 +180,15 @@ public class AssessmentController {
         if (!assessments.isEmpty()) {
             List<EntityModel<Assessment>> assessmentModels = assessments.stream()
                     .map(assessment -> EntityModel.of(assessment,
-                            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAssessmentById(assessment.getId())).withSelfRel()))
+                            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class)
+                                    .getAssessmentById(assessment.getId())).withSelfRel()))
                     .collect(Collectors.toList());
 
-            Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAssessmentsByStudentId(id)).withSelfRel();
-            CollectionModel<EntityModel<Assessment>> assessmentCollectionModel = CollectionModel.of(assessmentModels, selfLink);
+            Link selfLink = WebMvcLinkBuilder
+                    .linkTo(WebMvcLinkBuilder.methodOn(AssessmentController.class).getAssessmentsByStudentId(id))
+                    .withSelfRel();
+            CollectionModel<EntityModel<Assessment>> assessmentCollectionModel = CollectionModel.of(assessmentModels,
+                    selfLink);
 
             return new ResponseEntity<>(assessmentCollectionModel, HttpStatus.OK);
         } else {

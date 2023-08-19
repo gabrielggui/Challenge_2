@@ -1,4 +1,5 @@
 package br.com.compass.challenge2.unit.entity;
+
 import br.com.compass.challenge2.entity.Group;
 import br.com.compass.challenge2.entity.Organizer;
 import br.com.compass.challenge2.entity.Student;
