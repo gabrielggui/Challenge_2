@@ -1,0 +1,4 @@
+CREATE TABLE squads (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    squad_name VARCHAR(255) NOT NULL
+);
