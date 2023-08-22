@@ -1,4 +1,0 @@
-CREATE TABLE pb_groups (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    group_name VARCHAR(255) NOT NULL
-);
