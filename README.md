@@ -10,6 +10,11 @@ The goal in this technical challenge is to develop a RESTful API, which is capab
 * Unit Tests (JUnit 5, Mockito)  
 * Integration Tests (MockMvc)  
 
+### Update (20230823)
+* Implemented Flyway
+* Added **created_at** and **updated_at** columns in database tables
+* DTO implementation using Class Record ("Student" entity only)
+
 ## Modeling
 ### Class diagram
 ![Class diagram](https://raw.githubusercontent.com/kia735/Challenge_2/main/docs/class_diagram.png)
