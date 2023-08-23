@@ -1,5 +1,4 @@
 package br.com.compass.challenge2.repository;
-
 import br.com.compass.challenge2.entity.Assessment;
 import br.com.compass.challenge2.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;

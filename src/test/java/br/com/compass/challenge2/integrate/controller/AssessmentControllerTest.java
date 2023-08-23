@@ -1,5 +1,4 @@
 package br.com.compass.challenge2.integrate.controller;
-
 import br.com.compass.challenge2.config.ConfigTest;
 import br.com.compass.challenge2.dto.AssessmentDTO;
 import br.com.compass.challenge2.entity.Assessment;
@@ -11,7 +10,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -19,6 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+
+
 
 @AutoConfigureMockMvc(addFilters = false)
 public class AssessmentControllerTest implements ConfigTest {
@@ -44,7 +49,6 @@ public class AssessmentControllerTest implements ConfigTest {
         student.setEmail("john@example.com");
         student = studentService.save(student);
     }
-
     @Order(1)
     @Test
     public void testGetAllAssessments() throws Exception {
@@ -61,7 +65,7 @@ public class AssessmentControllerTest implements ConfigTest {
         assessment2 = assessmentService.save(assessment2);
 
         mockMvc.perform(get("/api/assessments")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.assessmentList", hasSize(2)))
                 .andExpect(jsonPath("$._embedded.assessmentList[0].activityName", is("English Test")))
@@ -78,8 +82,8 @@ public class AssessmentControllerTest implements ConfigTest {
         String json = objectMapper.writeValueAsString(assessmentDTO);
 
         mockMvc.perform(post("/api/assessments")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.activityName", is("Math Test")))
                 .andExpect(jsonPath("$.grade", is(8.5)));
@@ -95,8 +99,8 @@ public class AssessmentControllerTest implements ConfigTest {
         String json = objectMapper.writeValueAsString(assessmentDTO);
 
         mockMvc.perform(post("/api/assessments")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(status().isNotFound());
     }
 
@@ -116,8 +120,8 @@ public class AssessmentControllerTest implements ConfigTest {
         String json = objectMapper.writeValueAsString(assessmentDTO);
 
         mockMvc.perform(put("/api/assessments/{id}", existingAssessment.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.activityName", is("Updated Physics Test")))
                 .andExpect(jsonPath("$.grade", is(9.0)));
@@ -133,8 +137,8 @@ public class AssessmentControllerTest implements ConfigTest {
         String json = objectMapper.writeValueAsString(assessmentDTO);
 
         mockMvc.perform(put("/api/assessments/{id}", 999L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(status().isNotFound());
     }
 
@@ -147,14 +151,14 @@ public class AssessmentControllerTest implements ConfigTest {
         existingAssessment = assessmentService.save(existingAssessment);
 
         mockMvc.perform(delete("/api/assessments/{id}", existingAssessment.getId())
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     public void testDeleteAssessmentWithInvalidId() throws Exception {
         mockMvc.perform(delete("/api/assessments/{id}", 999L)
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
@@ -167,7 +171,7 @@ public class AssessmentControllerTest implements ConfigTest {
         existingAssessment = assessmentService.save(existingAssessment);
 
         mockMvc.perform(get("/api/assessments/{id}", existingAssessment.getId())
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.activityName", is("Chemistry Test")))
                 .andExpect(jsonPath("$.grade", is(8.0)));
@@ -176,9 +180,10 @@ public class AssessmentControllerTest implements ConfigTest {
     @Test
     public void testGetAssessmentByIdWithInvalidId() throws Exception {
         mockMvc.perform(get("/api/assessments/{id}", 999L)
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
+
 
     @Test
     public void testGetAssessmentsByStudentId() throws Exception {
@@ -200,7 +205,7 @@ public class AssessmentControllerTest implements ConfigTest {
         assessment2 = assessmentService.save(assessment2);
 
         mockMvc.perform(get("/api/assessments/students/{id}", student.getId())
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.assessmentList", hasSize(1)))
                 .andExpect(jsonPath("$._embedded.assessmentList[0].activityName", is("Physics Test")));
@@ -220,13 +225,13 @@ public class AssessmentControllerTest implements ConfigTest {
         String json = objectMapper.writeValueAsString(assessmentDTO);
 
         mockMvc.perform(patch("/api/assessments/{id}", existingAssessment.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.grade", is(9.0)));
 
         mockMvc.perform(get("/api/assessments/{id}", existingAssessment.getId())
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.activityName", is("Chemistry Test")))
                 .andExpect(jsonPath("$.id", is(student.getId().intValue())));
@@ -242,8 +247,8 @@ public class AssessmentControllerTest implements ConfigTest {
         String json = objectMapper.writeValueAsString(assessmentDTO);
 
         mockMvc.perform(post("/api/assessments")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(status().isBadRequest());
     }
 
@@ -257,15 +262,15 @@ public class AssessmentControllerTest implements ConfigTest {
         String json = objectMapper.writeValueAsString(assessmentDTO);
 
         mockMvc.perform(post("/api/assessments")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void testGetAllAssessmentsEmpty() throws Exception {
         mockMvc.perform(get("/api/assessments")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 

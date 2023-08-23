@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -19,7 +20,6 @@ import org.springframework.hateoas.RepresentationModel;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student extends RepresentationModel<Student> {
@@ -52,14 +52,14 @@ public class Student extends RepresentationModel<Student> {
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-    
+
     @LastModifiedDate
     @Column(name = "updated_at", updatable = false)
     private LocalDateTime updatedAt;
 
     @Builder
     public Student(Long id, String name, String email, Group group, Squad squad,
-            List<Assessment> assessments) {
+                   List<Assessment> assessments) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -68,4 +68,17 @@ public class Student extends RepresentationModel<Student> {
         this.assessments = assessments;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Student student = (Student) o;
+        return Objects.equals(id, student.id) && Objects.equals(name, student.name) && Objects.equals(email, student.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, name, email);
+    }
 }

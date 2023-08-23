@@ -4,7 +4,10 @@ import br.com.compass.challenge2.config.ConfigTest;
 import br.com.compass.challenge2.entity.Group;
 import br.com.compass.challenge2.entity.Organizer;
 import br.com.compass.challenge2.entity.Role;
+import br.com.compass.challenge2.repository.GroupRepository;
 import br.com.compass.challenge2.repository.OrganizerRepository;
+import br.com.compass.challenge2.repository.StudentRepository;
+import br.com.compass.challenge2.service.GroupService;
 import br.com.compass.challenge2.service.OrganizerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +33,7 @@ public class OrganizerServiceTest implements ConfigTest {
     private Organizer organizer;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(){
         organizerService = new OrganizerService(organizerRepository);
         organizer = new Organizer();
         organizer.setId(1L);
@@ -41,7 +44,7 @@ public class OrganizerServiceTest implements ConfigTest {
     }
 
     @Test
-    public void saveNewOrganizer() {
+    public void saveNewOrganizer(){
         Group group = Group.builder()
                 .id(1L)
                 .name("Spring Boot")

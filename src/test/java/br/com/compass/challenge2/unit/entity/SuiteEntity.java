@@ -7,11 +7,11 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @Testable
 @SelectClasses({
-                AssessmentTest.class,
-                StudentTest.class,
-                GroupTest.class,
-                SquadTest.class,
-                OrganizerTest.class
+        AssessmentTest.class,
+        StudentTest.class,
+        GroupTest.class,
+        SquadTest.class,
+        OrganizerTest.class
 })
 public class SuiteEntity {
 }

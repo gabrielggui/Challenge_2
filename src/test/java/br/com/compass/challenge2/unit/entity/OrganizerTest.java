@@ -3,6 +3,7 @@ package br.com.compass.challenge2.unit.entity;
 import br.com.compass.challenge2.entity.Group;
 import br.com.compass.challenge2.entity.Organizer;
 import br.com.compass.challenge2.entity.Role;
+import br.com.compass.challenge2.entity.Student;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -63,6 +64,7 @@ public class OrganizerTest {
                 .students(new ArrayList<>())
                 .build();
         newOrg.setGroups(Arrays.asList(group));
+
 
         assertEquals(1L, newOrg.getGroups().get(0).getId());
         assertEquals("Spring Boot", newOrg.getGroups().get(0).getName());

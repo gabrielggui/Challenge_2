@@ -35,8 +35,7 @@ public class OrganizerController {
     }
 
     @PutMapping("/{id}")
-    public EntityModel<Organizer> updateOrganizer(@PathVariable Long id,
-            @RequestBody @Valid Organizer updatedOrganizer) {
+    public EntityModel<Organizer> updateOrganizer(@PathVariable Long id, @RequestBody @Valid Organizer updatedOrganizer) {
         Organizer existingOrganizer = organizerService.findById(id);
         if (existingOrganizer == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Organizer not found with id: " + id);

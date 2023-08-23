@@ -15,7 +15,6 @@ public class AssessmentService implements CrudService<Assessment> {
 
     private AssessmentRepository assessmentRepository;
     private StudentService studentService;
-
     @Autowired
     public AssessmentService(AssessmentRepository repository, StudentService studentService) {
         this.assessmentRepository = repository;
@@ -67,7 +66,6 @@ public class AssessmentService implements CrudService<Assessment> {
 
         return assessment;
     }
-
     public List<Assessment> getAssessmentsByStudentId(Long studentId) {
         Student student = studentService.findById(studentId);
         if (student == null) {
